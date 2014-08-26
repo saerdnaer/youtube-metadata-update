@@ -17,8 +17,6 @@ def main():
     with open('youtube-urls.json') as data_file:
         videos = json.load(data_file)
     
-    slots = load_slot_mappings()
-    
     if not(dry_run):
         youtube = youtube_setup()
     
@@ -81,15 +79,6 @@ def get_event(event_id):
         return result[0]
     else:
         return False
-
-def load_slot_mappings():
-    slots = {}
-    with open('slots.csv') as file:
-        for line in file:
-            (slot, event_id) = line.strip().split(',', 1)
-            slots[event_id] = slot
-    return slots
-
 
 from HTMLParser import HTMLParser
 
