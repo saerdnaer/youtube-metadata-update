@@ -5,6 +5,8 @@ from youtube_api import debug
 import json
 import lxml.etree
 import gdata.media
+import sys
+import getpass
 
 dry_run = True
 dry_run = False
@@ -100,8 +102,7 @@ def youtube_setup():
     with open('.youtube-login') as fp:
         (email,password) = fp.read().strip().split(':', 1)
 
-    
-    if password is None:
+    if password is None or password == '':
         password = getpass.getpass("Password for account <%s>: " % email)
     elif password == "-":
         password = sys.stdin.readline().strip()
