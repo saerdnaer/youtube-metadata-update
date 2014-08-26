@@ -1,0 +1,7 @@
+#!/bin/bash 
+
+source /home/andi/youtube/bin/activate 
+export PYTHONIOENCODING=UTF-8
+
+python generate-youtube-mapping.py > youtube-urls.json
+python update-youtube-metadata.py 
