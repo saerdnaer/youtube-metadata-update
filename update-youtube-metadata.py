@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+# -*- coding: UTF-8 -*-
 
 import youtube_api
 from youtube_api import debug
