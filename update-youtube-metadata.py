@@ -12,8 +12,10 @@ dry_run = True
 dry_run = False
 #debug = False
 
-#schedule = lxml.etree.parse("http://sotm-eu.org/export.xml")
-schedule = lxml.etree.parse("schedule.xml")
+#schedule = lxml.etree.parse("http://domain.tld/schedule.xml")
+schedule = lxml.etree.parse("schedules/froscon2014.xml")
+fahrplan_base_url = 'http://programm.froscon.de/2014/events/'
+conference_tags = ['froscon', 'froscon9', 'froscon14', '2014', 'st augustin', 'free and open source conference', 'koeln', 'bonn', 'germany']
 
 def main():
     with open('youtube-urls.json') as data_file:
@@ -48,14 +50,18 @@ def main():
         
         # Youtube allows max 100 chars, see https://groups.google.com/d/msg/youtube-api-gdata/RzzD0MxFLL4/YiK83QnS3rcJ
         title = title[:99]
+       
+	def desc_format(key):
+            try:
+                return '\n\n' + strip_tags(event.find(key).text.replace('<li>', '* '))
+            except:
+		return ''
+ 
+        description = fahrplan_base_url + event_id + '.html' + \
+            desc_format('abstract') + \
+            desc_format('description')
         
-        description = 'http://2014.sotm-eu.org/en/slots/' + \
-            slots[event_id] + '\n\n' + \
-            strip_tags(event.find('abstract').text.replace('<li>', '* '))
-        
-        keywords = ', ' . join(['sotmeu', 'sotm-eu', 'sotmeu14', '2014' ,'sotm eu' ,
-            'state of the map europe', 'karlsruhe' , 'germany'] + \
-            [p.text for p in persons])
+        keywords = ', ' . join(conference_tags + [p.text for p in persons])
         
         print title
         #print description
