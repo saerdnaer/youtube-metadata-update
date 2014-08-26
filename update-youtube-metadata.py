@@ -8,8 +8,7 @@ import gdata.media
 import sys
 import getpass
 
-dry_run = True
-dry_run = False
+dry_run = True and False
 #debug = False
 
 #schedule = lxml.etree.parse("http://domain.tld/schedule.xml")
@@ -26,7 +25,7 @@ def main():
     
     #for event_id, youtube_url in {'61': 'https://www.youtube.com/watch?v=TQcc1ax75xw'}.iteritems():
     for event_id, youtube_url in videos.iteritems():
-        #if int(event_id) >= 20:
+        #if int(event_id) != 1415:
         #    continue
 
         print event_id
@@ -64,8 +63,9 @@ def main():
         keywords = ', ' . join(conference_tags + [p.text for p in persons])
         
         print title
-        #print description
-        #print keywords
+	if dry_run:
+            print description
+            print keywords
         print
         
         if not(dry_run):
