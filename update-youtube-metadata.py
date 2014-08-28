@@ -68,18 +68,19 @@ def main():
 	if dry_run:
             print description
             print keywords
-        print
         
         if not(dry_run):
             #youtube.update_metadata(youtube_url, title, description)
-            entry = youtube._get_feed_from_url(youtube_url)
-            entry.media.title = gdata.media.Title(text=title)
-            entry.media.description = \
-                    gdata.media.Description(description_type='plain', text=description) 
-            entry.media.keywords = gdata.media.Keywords(text=keywords)
-            youtube.service.UpdateVideoEntry(entry)
-            
-    
+            try:
+		entry = youtube._get_feed_from_url(youtube_url)
+                # TODO not allowed chars in description: >
+		entry.media.title = gdata.media.Title(text=title)
+		entry.media.description = gdata.media.Description(description_type='plain', text=description) 
+		entry.media.keywords = gdata.media.Keywords(text=keywords)
+		youtube.service.UpdateVideoEntry(entry)
+            except Exception, e:
+                print e
+        print  
     print "success"
 
 
