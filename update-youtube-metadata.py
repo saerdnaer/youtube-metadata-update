@@ -14,6 +14,7 @@ dry_run = True and False
 #schedule = lxml.etree.parse("http://domain.tld/schedule.xml")
 schedule = lxml.etree.parse("schedules/froscon2014.xml")
 fahrplan_base_url = 'http://programm.froscon.de/2014/events/'
+media_base_url = 'https://media.ccc.de/browse/conferences/froscon/2014/'
 conference_tags = ['froscon', 'froscon9', 'froscon14', '2014', 'st augustin', 'free and open source conference', 'koeln', 'bonn', 'germany']
 
 def main():
@@ -56,7 +57,8 @@ def main():
             except:
 		return ''
  
-        description = fahrplan_base_url + event_id + '.html' + \
+        description = fahrplan_base_url + event_id + '.html\n' + \
+            media_base_url + event.find('slug').text + '.html' + \
             desc_format('abstract') + \
             desc_format('description')
         
